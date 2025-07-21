@@ -3,6 +3,7 @@ import Menu from './Menu'
 import Link from 'next/link'
 import CartIcon from './CartIcon';
 import Image from 'next/image';
+import UseLinks from './UseLinks';
 
 export default function Navbar() {
     const user = false;
@@ -11,8 +12,8 @@ export default function Navbar() {
             {/* Logo */}
             <div className='hidden md:flex gap-4 flex-1'>
                 <Link href={"/"}> Homepage</Link>
-                <Link href={"/"}> Menu</Link>
-                <Link href={"/"}> Contact</Link>
+                <Link href={"/menu"}> Menu</Link>
+                <Link href={"/contact"}> Contact</Link>
             </div>
             <div className='text-xl md:font-bold flex-1 md:text-center'>
                 <Link href="/">
@@ -28,9 +29,7 @@ export default function Navbar() {
                     <Image src={"/phone.png"} alt='' width={20} height={20} />
                     <span>7894564859</span>
                 </div>
-                {!user ? <Link href={"/login"}> Login</Link>
-                    : <Link href={"/order"}> Orders</Link>
-                }
+                <UseLinks />
                 <CartIcon />
             </div>
         </div >
