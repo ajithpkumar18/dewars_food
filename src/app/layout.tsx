@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MASSIMO",
-  description: "Best food in town",
+  description: "Best food in town!",
 };
 
 export default function RootLayout({
