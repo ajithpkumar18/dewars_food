@@ -1,3 +1,5 @@
+"user client"
+
 export default function OrdersPage() {
   return (
     <div className="p-4 lg:px-20 xl:px-40">
