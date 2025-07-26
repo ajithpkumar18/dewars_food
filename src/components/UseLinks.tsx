@@ -8,7 +8,7 @@ export default function UseLinks() {
     return (
         <div>{status === "authenticated" ? (
             <div>
-                <Link href={"/order"}> Orders</Link>
+                <Link href={"/orders"}> Orders</Link>
                 <span className='ml-2 cursor-pointer' onClick={() => signOut()}>Logout</span>
             </div>
         )
