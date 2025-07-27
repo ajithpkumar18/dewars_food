@@ -1,15 +1,27 @@
 "use client"
 import { useCartStore } from "@/utils/store";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function CartPage() {
+
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
+
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
 
   useEffect(() => {
     useCartStore.persist.rehydrate()
   }, [])
 
-  const { products, totalItems, totalPrice, addToCart, removeFromCart } = useCartStore()
+  const { products, totalItems, totalPrice, addToCart, removeFromCart } = useCartStore();
+  console.log(products);
+
   return (
     <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row">
       <div className="h-1/2 p-4 flex flex-col justify-center overflow-scroll lg:h-full lg:w-2/3 2xl:w-1/2 lg:px-20 xl:px-40">
@@ -18,7 +30,7 @@ export default function CartPage() {
           <div className="flex items-center justify-between mb-4 ">
             {item.img && (<Image src={item.img} alt="" width={100} height={100} />)}
             <div className="">
-              <h1 className="uppercase text-xl font-bold">{item.title}</h1>
+              <h1 className="uppercase text-xl font-bold">{item.title} x {item.quantity}</h1>
               <span>{item.optionTitle}</span>
             </div>
             <h2 className="font-bold">{item.price}</h2>
