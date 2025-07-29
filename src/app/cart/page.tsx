@@ -6,21 +6,45 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function CartPage() {
+  const { products, totalItems, totalPrice, addToCart, removeFromCart } = useCartStore();
 
   const { data: session, status } = useSession();
 
   const router = useRouter();
 
-  if (status === "unauthenticated") {
-    router.push("/");
-  }
-
   useEffect(() => {
     useCartStore.persist.rehydrate()
   }, [])
 
-  const { products, totalItems, totalPrice, addToCart, removeFromCart } = useCartStore();
-  console.log(products);
+  const handleCheckout = async () => {
+    if (!session) {
+      router.push("/")
+    }
+    else {
+      try {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            price: totalPrice,
+            products,
+            status: "Not Paid!",
+            userEmail: session.user.email,
+          }),
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        router.push(`/pay/${data.id}`)
+      }
+      catch (err) {
+        console.log(err);
+
+
+      }
+    }
+  }
 
   return (
     <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row">
@@ -59,7 +83,7 @@ export default function CartPage() {
           <span className="">Total(INCL. VAT)</span>
           <span className="">{totalPrice}</span>
         </div>
-        <button className="bg-red-500 text-white rounded-md w-1/2 self-end">Checkout</button>
+        <button className="bg-red-500 text-white rounded-md w-1/2 self-end" onClick={handleCheckout}>Checkout</button>
       </div>
     </div>
   );
