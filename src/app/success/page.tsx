@@ -7,11 +7,12 @@ function SuccessPage() {
     const searchParams = useSearchParams();
     const payment_intent = searchParams.get("payment_intent");
     const router = useRouter()
+    console.log(payment_intent);
 
     useEffect(() => {
         const makeRequest = async () => {
             try {
-                await fetch(`http://localhost:3000/apip/confirm/${payment_intent}`, {
+                await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
                     method: "PUT"
                 });
 
