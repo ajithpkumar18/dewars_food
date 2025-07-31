@@ -23,7 +23,7 @@ function AddPage() {
         title: "",
         desc: "",
         price: 0,
-        catSlug: 0,
+        catSlug: "",
     })
 
     const [option, setOption] = useState<Option>(
@@ -35,7 +35,7 @@ function AddPage() {
 
     const [options, setOptions] = useState<Option[]>([])
 
-    const [file, setFile] = useState<FileList | null>();
+    const [file, setFile] = useState<File>();
 
     const router = useRouter();
 
@@ -60,13 +60,36 @@ function AddPage() {
         })
     }
 
+    const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        const item = (target.files as FileList)[0];
+        setFile(item)
+    }
+
+    const upload = async () => {
+
+        const data = new FormData()
+        data.append("file", file!);
+        data.append("upload_preset", "restaurant")
+        const res = await fetch("https://api.cloudinary.com/v1_1/dlux6k0f5/image/upload", {
+            method: "POST",
+            body: data
+        })
+
+        const resData = await res.json();
+        return resData.url;
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
+
+            const url = await upload();
             const res = await fetch("http://localhost:3000/api/products", {
                 method: "POST",
                 body: JSON.stringify({
+                    img: url,
                     ...inputs,
                     options
                 })
@@ -75,7 +98,7 @@ function AddPage() {
             const data = await res.json()
             console.log("new product=", data);
 
-            // router.push(`/product/${data.id}`)
+            router.push(`/product/${data.id}`)
         }
         catch (err) {
             console.log(err)
@@ -88,7 +111,7 @@ function AddPage() {
                 <h1>Add New Product</h1>
                 <div className="w-full flex flex-col gap-2">
                     <label htmlFor="">Image</label>
-                    <input onChange={e => setFile(e.target.files)} className="ring-1 ring-red-200 p-2 rounded-sm" type="file" />
+                    <input onChange={handleChangeImg} className="ring-1 ring-red-200 p-2 rounded-sm" type="file" />
                 </div>
                 <div className="w-full flex flex-col gap-2">
                     <label htmlFor="">Description</label>
