@@ -7,8 +7,6 @@ import AddressForm from "./AddressForm";
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-
-    const [email, setEmail] = useState("")
     const [message, setMessage] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 

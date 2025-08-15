@@ -9,6 +9,7 @@ const AddressForm = () => {
                 onChange={(event) => {
                     if (event.complete) {
                         const address = event.value.address;
+                        console.log(address);
                     }
                 }}
             />

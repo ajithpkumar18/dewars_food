@@ -1,7 +1,7 @@
 "use client"
 
 import { OrderType } from "@/types/types";
-import { QueryCache, QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ export default function OrdersPage() {
   if (status === "unauthenticated") {
     router.push("/");
   }
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ['orders'],
     queryFn: () => fetch(`http://localhost:3000/api/orders`).then(
       (res) => res.json(),

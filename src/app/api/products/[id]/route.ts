@@ -1,9 +1,8 @@
 import { getAuthSession } from "@/utils/auth";
 import { prisma } from "@/utils/connect";
-import { Session } from "inspector/promises";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
     console.log("Products by is backend");
 
@@ -25,9 +24,9 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     }
 }
 
-export const DELETE = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
-    const { id } = params;
+    const { id } = await params;
     const session = await getAuthSession();
 
     if (session?.user.isAdmin) {
@@ -39,7 +38,7 @@ export const DELETE = async (req: NextRequest, { params }: { params: { id: strin
                 },
             });
 
-            return new NextResponse(JSON.stringify("Product has been deleted"), { status: 200 })
+            return new NextResponse(JSON.stringify("Product has been deleted" + product), { status: 200 })
         } catch (err) {
             console.log(err);
             return new NextResponse(

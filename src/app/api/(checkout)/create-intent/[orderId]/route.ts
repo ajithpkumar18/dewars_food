@@ -1,7 +1,8 @@
 import { prisma } from "@/utils/connect";
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 export const POST = async (req: Request, { params }: { params: Promise<{ orderId: string }> }) => {
     const { orderId } = await params;
     try {
@@ -14,7 +15,7 @@ export const POST = async (req: Request, { params }: { params: Promise<{ orderId
             return new NextResponse(JSON.stringify({ message: "Order not found" }), { status: 404 });
         }
 
-        let paymentIntent = await stripe.paymentIntents.create({
+        const paymentIntent = await stripe.paymentIntents.create({
             amount: 100 * 100,
             currency: "usd",
             automatic_payment_methods: { enabled: true },

@@ -1,7 +1,6 @@
 "use client"
 import { ProductType } from '@/types/types';
 import { useCartStore } from '@/utils/store';
-import { title } from 'process';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 

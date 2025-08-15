@@ -18,7 +18,7 @@ const Featured = async () => {
 
     const featuredProducts: ProductType[] = await getData()
     return (
-        <div className=' w-full overflow-x-scroll text-red-500'>
+        <div className=' w-full overflow-x-scroll scrollbar-hide text-red-500'>
             <div className='w-max flex'>
                 {featuredProducts.map(item => (
 

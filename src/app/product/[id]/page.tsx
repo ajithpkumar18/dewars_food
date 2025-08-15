@@ -18,7 +18,7 @@ const getData = async (id: string) => {
   return res.json();
 }
 
-const SingleProduct = async ({ params }: { params: { id: string } }) => {
+const SingleProduct = async ({ params }: { params: Promise<{ id: string }> }) => {
   const param = await params;
   const singleProduct: ProductType = await getData(param.id);
   console.log(singleProduct);

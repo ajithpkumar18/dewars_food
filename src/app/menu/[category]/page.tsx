@@ -1,4 +1,3 @@
-import { pizzas } from '@/data'
 import { ProductType } from '@/types/types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,12 +17,12 @@ const getData = async (category: string) => {
 
 
 type Props = {
-    params: { category: string }
+    params: Promise<{ category: string }>
 }
 
 const CategoryPage = async ({ params }: Props) => {
-
-    const products: ProductType[] = await getData((await params).category);
+    const { category } = await params;
+    const products: ProductType[] = await getData(category);
     return (
         <div className='flex flex-wrap text-red-500'>
             {
