@@ -18,7 +18,7 @@ export default function OrdersPage() {
   }
   const { isLoading, data } = useQuery({
     queryKey: ['orders'],
-    queryFn: () => fetch(`http://localhost:3000/api/orders`).then(
+    queryFn: () => fetch(`https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/api/orders`).then(
       (res) => res.json(),
     ),
   })
@@ -27,7 +27,7 @@ export default function OrdersPage() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) => {
-      return fetch(`http://localhost:3000/api/orders/${id}`, {
+      return fetch(`https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/api/orders/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

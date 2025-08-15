@@ -22,7 +22,7 @@ export default function CartPage() {
     }
     else {
       try {
-        const res = await fetch("http://localhost:3000/api/orders", {
+        const res = await fetch("https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
