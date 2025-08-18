@@ -53,7 +53,7 @@ const CheckoutForm = () => {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/success",
+                return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
             },
         });
 

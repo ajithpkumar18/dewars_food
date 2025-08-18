@@ -17,7 +17,7 @@ function PayPage({ params }: { params: Promise<{ id: string }> }) {
     useEffect(() => {
         const makeRequest = async () => {
             try {
-                const res = await fetch(`https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/api/create-intent/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create-intent/${id}`, {
                     method: "POST"
                 })
 

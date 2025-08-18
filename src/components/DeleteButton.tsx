@@ -19,7 +19,7 @@ const DeleteButton = ({ id }: { id: string }) => {
     }
 
     const handleDelete = async () => {
-        const res = await fetch(`https://dewars-food-hb1s-qs6n1qnt8-ajiths-projects-18f603ad.vercel.app/api/products/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${id}`, {
             method: "DELETE",
         })
 
